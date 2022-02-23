@@ -13,6 +13,10 @@ resources:
   kind: Module
   path: github.com/SebastienLaurent/k8s-controller-kubebuilder/api/v1
   version: v1
+  webhooks:
+    defaulting: true
+    validation: true
+    webhookVersion: v1
 - controller: true
   group: core
   kind: Pod

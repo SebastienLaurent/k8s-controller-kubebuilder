@@ -33,7 +33,6 @@ type SubModuleSpec struct {
 
 type ModuleSpec struct {
 	// +kubebuilder:validation:MaxLength=15
-	// +kubebuilder:validation:MinLength=1
 	Cu string `json:"cu"`
 
 	// +kubebuilder:validation:MaxLength=20
