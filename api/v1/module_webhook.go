@@ -42,7 +42,7 @@ var _ webhook.Defaulter = &Module{}
 func (r *Module) Default() {
 	modulelog.Info("default", "name", r.Name)
 
-	if (r.Spec.Cu == "") {
+	if r.Spec.Cu == "" {
 		r.Spec.Cu = "test"
 	}
 }
