@@ -31,18 +31,22 @@ import (
 
 	ref "k8s.io/client-go/tools/reference"
 
+	"k8s.io/client-go/tools/record"
+
 	samplev1 "github.com/SebastienLaurent/k8s-controller-kubebuilder/api/v1"
 )
 
 // ModuleReconciler reconciles a Module object
 type ModuleReconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
+	Scheme   *runtime.Scheme
+	Recorder record.EventRecorder
 }
 
 //+kubebuilder:rbac:groups=sample.alien4cloud,resources=modules,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=sample.alien4cloud,resources=modules/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=sample.alien4cloud,resources=modules/finalizers,verbs=update
+//+kubebuilder:rbac:groups="",resources=events,verbs=create;patch
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -154,6 +158,8 @@ func (r *ModuleReconciler) launchSidecar(ctx context.Context, module samplev1.Mo
 	if err := r.Create(ctx, sidePod); err != nil {
 		return nil, err
 	}
+
+	r.Recorder.Event(&module, "Normal", "Created", "Sidecar pod created")
 
 	return sidePod, nil
 }
