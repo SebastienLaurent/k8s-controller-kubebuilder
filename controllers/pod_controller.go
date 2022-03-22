@@ -134,7 +134,7 @@ func (r *PodReconciler) doAnnotate(ctx context.Context, pod *corev1.Pod, module 
 			}
 			pod.ObjectMeta.Annotations["a4c/module"] = module.Spec.Module
 
-			return r.Status().Update(ctx, pod)
+			return r.Update(ctx, pod)
 		} else {
 			return nil
 		}
